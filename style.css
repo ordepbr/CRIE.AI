@@ -1,0 +1,31 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Style the container for the animation */
+.animation-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+}
+
+/* Style the text element */
+.animation-container h1 {
+  font-size: 4rem;
+  color: #fff;
+  text-align: center;
+  text-shadow: 2px 2px #000;
+  animation: fadein 2s;
+}
+
+/* Define the animation */
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
