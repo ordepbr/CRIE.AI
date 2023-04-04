@@ -5,61 +5,87 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.layers import Input, Embedding, LSTM, Dense
 from tensorflow.keras.models import Model
+
+from moviepy.editor import *
+import requests
+from io import BytesIO
+
 from flask import Flask, request, render_template
 
+import os
+from moviepy.editor import VideoFileClip, concatenate_videoclips
+
 # Define the deep learning model architecture
-def build_model(max_len, vocab_size):
-    input_layer = Input(shape=(max_len,))
-    x = Embedding(input_dim=vocab_size, output_dim=50, input_length=max_len)(input_layer)
-    x = LSTM(128)(x)
-    x = Dense(128, activation='relu')(x)
-    output_layer = Dense(max_len, activation='softmax')(x)
+def build_model(input_shape, num_words):
+    # Input layer
+    input_layer = Input(shape=input_shape)
+
+    # Embedding layer
+    embedding_layer = Embedding(num_words, 50)(input_layer)
+
+    # LSTM layer
+    lstm_layer = LSTM(128)(embedding_layer)
+
+    # Dense output layer
+    output_layer = Dense(num_words, activation='softmax')(lstm_layer)
+
+    # Compile the model
     model = Model(inputs=input_layer, outputs=output_layer)
     model.compile(loss='categorical_crossentropy', optimizer='adam')
+
     return model
-    
+
 # Train the model on input text
-def train_model(text):
+def train_model(input_text):
+    # Tokenize the input text
     tokenizer = Tokenizer()
-    tokenizer.fit_on_texts([text])
-    sequences = tokenizer.texts_to_sequences([text])[0]
-    max_len = max([len(seq) for seq in sequences])
-    vocab_size = len(tokenizer.word_index) + 1
-    padded_sequences = pad_sequences([sequences], maxlen=max_len, padding='pre')
-    x_train = padded_sequences[:, :-1]
-    y_train = tf.keras.utils.to_categorical(padded_sequences[:, 1:], num_classes=vocab_size)
-    model = build_model(max_len - 1, vocab_size)
-    model.fit(x_train, y_train, epochs=20, verbose=0)
-    return tokenizer, model
+    tokenizer.fit_on_texts([input_text])
+
+    # Convert text to sequences
+    sequences = tokenizer.texts_to_sequences([input_text])
+    sequence_length = len(sequences[0])
+
+    # Define input and output sequences
+    sequences = np.array(sequences)
+    X = sequences[:,:-1]
+    y = tf.keras.utils.to_categorical(sequences[:,-1], num_classes=len(tokenizer.word_index)+1)
+
+    # Define the model
+    model = build_model((sequence_length-1,), len(tokenizer.word_index)+1)
+
+    # Fit the model to the data
+    model.fit(X, y, epochs=50, verbose=2)
+
+    return tokenizer, model, sequence_length
 
 # Generate a text sequence from input text using the trained model
 def generate_text_sequence(seed_text, model, tokenizer, sequence_length):
-    for _ in range(sequence_length):
-        encoded = tokenizer.texts_to_sequences([seed_text])[0]
-        encoded = pad_sequences([encoded], maxlen=sequence_length, padding='pre', truncating='pre')
-        y_predict = model.predict_classes(encoded, verbose=0)
-        predicted_word = ''
-        for word, index in tokenizer.word_index.items():
-            if index == y_predict:
-                predicted_word = word
-                break
-        seed_text += ' ' + predicted_word
-    return seed_text
+    # Generate a sequence of tokens from the seed text
+    tokens = tokenizer.texts_to_sequences([seed_text])[0]
+    # Pad the sequence to match the desired input length for the model
+    tokens_padded = pad_sequences([tokens], maxlen=sequence_length-1, padding='pre')
+    # Use the model to predict the next word for each token in the sequence
+    predicted_indices = np.argmax(model.predict(tokens_padded), axis=-1)
+    # Convert the predicted indices back to words
+    predicted_words = []
+    for index in predicted_indices:
+        word = tokenizer.index_word[index]
+        predicted_words.append(word)
+    # Join the predicted words to form the output sequence
+    output_sequence = seed_text + ' ' + ' '.join(predicted_words)
+    return output_sequence
 
-# Define a Flask web interface for the algorithm
-app = Flask(__name__)
+# Generate a video animation from input text using the trained model and input video
+def generate_animation(input_text, input_video):
+    # Load the input video clip
+    video_clip = VideoFileClip(input_video)
 
-@app.route('/')
-def home():
-    return render_template('home.html')
-
-@app.route('/generate_sequence', methods=['POST'])
-def generate_sequence():
-    input_text = request.form['input_text']
-    sequence_length = int(request.form['sequence_length'])
-    tokenizer, model = train_model(input_text)
-    sequence = generate_text_sequence(input_text, model, tokenizer, sequence_length)
-    return render_template('sequence.html', sequence=sequence)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    # Split the input video clip into subclips of 10 seconds each
+    duration = video_clip.duration
+    subclip_duration = 10
+    subclips = []
+    for i in range(int(duration / subclip_duration)):
+        subclip = video_clip.subclip(i * subclip_duration, (i + 1) * subclip_duration)
+        subclips.append(subclip)
+    if duration % subclip_duration != 0:
+        subclip = video_clip.subclip
