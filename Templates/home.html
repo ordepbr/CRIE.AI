@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Home</title>
-</head>
-<body>
-	<h1>Gerador de animações</h1>
-	<form action="{{ url_for('generate_animation') }}" method="POST">
-		<label for="input_text">Texto de entrada:</label>
-		<input type="text" id="input_text" name="input_text"><br><br>
-		<input type="submit" value="Gerar animação">
-	</form>
-</body>
+  <head>
+    <title>Video Animation Generator</title>
+  </head>
+  <body>
+    <h1>Video Animation Generator</h1>
+    <form method="POST" action="/">
+      <label for="input_text">Enter your text:</label><br>
+      <textarea name="input_text" rows="10" cols="50"></textarea><br>
+      <label for="input_video">Choose a video file:</label><br>
+      <input type="file" name="input_video"><br><br>
+      <input type="submit" value="Generate">
+    </form>
+  </body>
 </html>
