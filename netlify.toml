@@ -11,18 +11,18 @@
 
 # Variáveis de ambiente
 [context.production.environment]
-  PYTHON_VERSION = "3.11" # versão do Python para produção
+  PYTHON_VERSION = "3.8" # versão do Python para produção
   NETLIFY = "true" # variável de ambiente para identificar ambiente de implantação
 
 [context.deploy-preview.environment]
-  PYTHON_VERSION = "3.11" # versão do Python para preview de implantação
+  PYTHON_VERSION = "3.8" # versão do Python para preview de implantação
   NETLIFY = "true" # variável de ambiente para identificar ambiente de implantação
 
 [context.branch-deploy.environment]
-  PYTHON_VERSION = "3.11" # versão do Python para deploy de branch
+  PYTHON_VERSION = "3.8" # versão do Python para deploy de branch
   NETLIFY = "true" # variável de ambiente para identificar ambiente de implantação
 
 [context.split-test.environment]
-  PYTHON_VERSION = "3.11" # versão do Python para testes A/B
+  PYTHON_VERSION = "3.8" # versão do Python para testes A/B
   NETLIFY = "true" # variável de ambiente para identificar ambiente de implantação
 
