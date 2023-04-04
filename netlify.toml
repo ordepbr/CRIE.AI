@@ -1,6 +1,6 @@
 [build]
-  command = "python app.py"
-  publish = "static/"
+  command = "pip install -r requirements.txt && python app.py"
+  publish = "static"
 
 [[redirects]]
   from = "/*"
