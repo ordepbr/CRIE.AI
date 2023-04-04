@@ -1,8 +1,28 @@
+# Configurações gerais
 [build]
-  command = "pip install -r requirements.txt && python app.py"
-  publish = "static"
+  command = "pip install -r requirements.txt && python app.py" # comando para construir e executar a aplicação
+  publish = "static" # diretório de publicação
 
+# Redirecionamentos de URL
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  from = "/*" # redirecionar todas as URLs
+  to = "/index.html" # redirecionar para a página principal
+  status = 200 # status do redirecionamento
+
+# Variáveis de ambiente
+[context.production.environment]
+  PYTHON_VERSION = "3.8.12" # versão do Python para produção
+  NETLIFY = "true" # variável de ambiente para identificar ambiente de implantação
+
+[context.deploy-preview.environment]
+  PYTHON_VERSION = "3.8.12" # versão do Python para preview de implantação
+  NETLIFY = "true" # variável de ambiente para identificar ambiente de implantação
+
+[context.branch-deploy.environment]
+  PYTHON_VERSION = "3.8.12" # versão do Python para deploy de branch
+  NETLIFY = "true" # variável de ambiente para identificar ambiente de implantação
+
+[context.split-test.environment]
+  PYTHON_VERSION = "3.8.12" # versão do Python para testes A/B
+  NETLIFY = "true" # variável de ambiente para identificar ambiente de implantação
+
