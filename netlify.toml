@@ -1,6 +1,6 @@
 # Configurações gerais
 [build]
-  command = "pip install -r requirements.txt && python app.py" # comando para construir e executar a aplicação
+  command = "python app.py" # comando para construir e executar a aplicação
   publish = "static" # diretório de publicação
 
 # Redirecionamentos de URL
