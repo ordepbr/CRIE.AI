@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+	<h1>Gerador de animações</h1>
+	<form action="{{ url_for('generate_animation') }}" method="POST">
+		<label for="input_text">Texto de entrada:</label>
+		<input type="text" id="input_text" name="input_text"><br><br>
+		<input type="submit" value="Gerar animação">
+	</form>
+</body>
+</html>
