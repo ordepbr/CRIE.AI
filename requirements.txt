@@ -1,6 +1,6 @@
 numpy==1.22
 tensorflow==2.12.0
-tensorrt==0.0.1
+tensorrt==8.6.0
 protobuf==4.22.0
 pandas==2.0.0
 scikit-learn==1.2.2
