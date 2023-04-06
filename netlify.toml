@@ -1,7 +1,7 @@
 # Configurações gerais
 [build]
-  command = "python app.py" # comando para construir e executar a aplicação
-  publish = "static" # diretório de publicação
+  command = "python app.py && mv templates/home.html public/index.html"
+  publish = "public"
 
 # Redirecionamentos de URL
 [[redirects]]
