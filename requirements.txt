@@ -1,6 +1,6 @@
 numpy==1.22
 tensorflow==2.11.1
-protobuf==4.22.0
+protobuf==3.9.2
 pandas==2.0.0
 scikit-learn==1.2.2
 grpcio==1.53.0
