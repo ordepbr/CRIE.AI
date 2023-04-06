@@ -6,7 +6,7 @@
 # Redirecionamentos de URL
 [[redirects]]
   from = "/*" # redirecionar todas as URLs
-  to = "/index.html" # redirecionar para a página principal
+  to = "/home.html" # redirecionar para a página principal
   status = 200 # status do redirecionamento
 
 # Variáveis de ambiente
