@@ -23,7 +23,7 @@ def result():
     
     # Gera os subclips e aplica o algoritmo em cada um
     subclips = [video_clip.subclip(i, i + subclip_duration) for i in range(0, int(duration), subclip_duration)]
-    results = [detect_faces(subclip) for subclip in subclips]
+    results = [subclip for subclip in subclips]
     
     # Concatena os resultados em um único vídeo
     final_clip = concatenate_videoclips(results)
@@ -35,18 +35,6 @@ def result():
     os.remove('input.mp4')
     
     return render_template('result.html')
-
-# Função para detectar os rostos em um vídeo
-def detect_faces(clip):
-    # Aplica o algoritmo de detecção de faces
-    faces = (VideoFileClip.detect_faces)(clip, detector='hog')
-
-    # Desenha os retângulos ao redor dos rostos detectados
-    for face in faces:
-        x, y, w, h = face['box']
-        clip = (clip.fx(vfx.draw_rect, x, y, w, h, color=(255, 0, 0)))
-
-    return clip
 
 if __name__ == '__main__':
     app.run(debug=False)
