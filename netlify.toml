@@ -1,7 +1,7 @@
 # Configurações gerais
 [build]
-  command = "python build.py && mv output/index.html public/index.html"
-  publish = "public"
+  command = "python build.py && mv output.mp4 public/output.mp4 && cp templates/index.html public/index.html"
+  publish = "public/"
 
 # Redirecionamentos de URL
 [[redirects]]
