@@ -1,6 +1,6 @@
 # Configurações gerais
 [build]
-  command = "python app.py && mv templates/index.html public/index.html"
+  command = "python build.py && mv output/index.html public/index.html"
   publish = "public"
 
 # Redirecionamentos de URL
