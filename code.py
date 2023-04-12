@@ -88,4 +88,27 @@ def generate_animation(input_text, input_video):
         subclip = video_clip.subclip(i * subclip_duration, (i + 1) * subclip_duration)
         subclips.append(subclip)
     if duration % subclip_duration != 0:
-        subclip = video_clip.subclip
+        subclip = video_clip.subclip(int(duration / subclip_duration) * subclip_duration, duration)
+        subclips.append(subclip)
+
+    # Generate a text sequence for each subclip using the trained model
+    tokenizer, model, sequence_length = train_model(input_text)
+    text_sequences = []
+    for subclip in subclips:
+        text = generate_text_sequence(input_text, model, tokenizer, sequence_length)
+        text_sequences.append(text)
+
+    # Create an animation from each text sequence using Manim
+    for i, text_sequence in enumerate(text_sequences):
+        scene = TextScene(TextMobject(text_sequence))
+        animation_name = f"animation_{i}.mp4"
+        scene.render(animation_name)
+
+    # Combine the animations into a single video file
+    animations = [VideoFileClip(f"animation_{i}.mp4") for i in range(len(subclips))]
+    final_animation = concatenate_videoclips(animations)
+    final_animation.write_videofile("output.mp4")
+
+    # Remove the intermediate animation files
+    for i in range(len(subclips)):
+        os.remove(f"animation_{i}.mp4")
