@@ -1,7 +1,6 @@
 # Configurações gerais
 [build]
   command = "python build.py && mv output/index.html public/index.html"
-  commandOrigin: "config"
   publish = "public"
 
 # Redirecionamentos de URL
