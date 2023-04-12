@@ -1,17 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Video Animation Generator</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRIE.AI - DALL-E</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="./static/css/style.css" />
   </head>
   <body>
-    <h1>Video Animation Generator</h1>
-    <form method="POST" action="/">
-      <label for="input_text">Enter your text:</label><br>
-      <textarea name="input_text" rows="10" cols="50"></textarea><br>
-      <label for="input_video">Choose a video file:</label><br>
-      <input type="file" name="input_video"><br><br>
-      <input type="submit" value="Generate">
-    </form>
-  </body>
-</html>
+    <header>
+      <div class="container">
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero-title">CRIE.AI - DALL-E</h1>
+        <p class="hero-text">Generate unique images with DALL-E AI</p>
+        <form action="#" class="hero-form">
+          <div class="hero-form-group">
+            <input type="text" class="hero-form-input" placeholder="Enter a sentence to generate an image">
+            <button type="submit" class="hero-form-button">Generate</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <section class="gallery">
+      <div class="container">
+        <h2 class="gallery-title">Generated Images</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="./static/images/gallery-1.jpg" alt="Generated image">
+          </div>
+          <div class="gallery-item">
+            <img src="./static/images/gallery-2.jpg" alt="Generated image">
+          </div>
+          <div class="gallery-item">
+            <img src="./static/images/gallery-3.jpg" alt="Generated image">
+          </div>
+          <div class="gallery-item">
+            <img src="./static/images/gallery-4.jpg" alt="Generated image">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="features">
+      <div class="container">
+        <h2 class="features-title">Features</h2>
+        <ul class="features-list">
+          <li class="features-item">Generate unique images with DALL-E AI</li>
+          <li class="features-item">Choose from different image sizes and formats</li>
+          <li class="features-item">Easy to use interface</li>
+          <li class="features-item">Responsive design for mobile and desktop</li>
+        </ul>
+      </div>
+    </section>
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 CRIE.AI - DALL-E</p>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="./static
